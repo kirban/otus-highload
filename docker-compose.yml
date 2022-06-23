@@ -1,0 +1,48 @@
+version: '3.8'
+networks:
+  social-app:
+    driver: bridge
+services:
+  db:
+    platform: linux/x86_64
+    image: arm64v8/mysql:oracle
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    environment:
+      # MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      # MYSQL_DATABASE: test_db
+      # MYSQL_ALLOW_EMPTY_PASSWORD: ok
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_USER: me
+      MYSQL_PASSWORD: secret
+      # MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: my_db
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - social-app
+  api:
+    networks:
+      - social-app
+    depends_on:
+      - db
+    restart: unless-stopped
+    command: bash -c 'while !</dev/tcp/db/3306; do sleep 5; done; npm start'
+    build:
+      context: ./
+    volumes:
+      - '.:/app'
+    ports:
+      - '8080:8080'
+      - '9229:9229'
+    environment:
+      NODE_ENV: development
+      DEBUG: nodejs-docker-express:*
+    stdin_open: true
+    tty: true
+volumes:
+  db:

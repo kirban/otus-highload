@@ -2,9 +2,10 @@
   "name": "1-social-network",
   "version": "1.0.0",
   "description": "First hometask for OTUS Highload architect course",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "debug": "node --inspect-brk=0.0.0.0 server.js",
     "serve": "./node_modules/.bin/nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

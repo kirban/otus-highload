@@ -39,6 +39,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+<<<<<<< HEAD
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -102,3 +103,7 @@ dist
 
 # TernJS port file
 .tern-port
+=======
+.env
+tmp/db-data/*
+>>>>>>> 11568ed (feat: create connection between docker images for app and mysql db)
