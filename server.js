@@ -8,28 +8,45 @@ const {
   DB_NAME: database,
   DB_PORT: dbPort = 3306,
 } = process.env;
-const express = require('express');
-const mysql = require('mysql');
-const authRouter = require('./routes/auth');
 
-const dbConnection = mysql.createConnection({
+const corsOptions = {
+  origin: `http://localhost:${API_PORT}`,
+};
+const express = require('express');
+const mysql = require('mysql2');
+const cors = require('cors');
+const authRouter = require('./app/middleware/auth');
+
+const dbConnectionPool = mysql.createPool({
   host,
   user,
   password,
   database,
   port: dbPort,
-});
-dbConnection.connect();
+  connectionLimit: 10,
+}).promise();
+
 const server = express();
 
+server.use(express.json());
+// server.use(express.urlencoded({ extended: true }));
+server.use(cors(corsOptions));
 server.use(authRouter);
 
-server.listen(API_PORT, () => {
-  dbConnection.query('SELECT 1 + 1 AS solution', (error, results, fields) => {
-    if (error) throw error;
-    console.log('The solution is: ', results[0].solution);
-  });
+// routes
+server.get('/', (req, res) => {
+  res.json({ message: 'Welcome to the application.' });
+});
 
-  dbConnection.end();
+server.listen(API_PORT, () => {
+  dbConnectionPool.execute('SELECT 1 + 1 AS solution')
+    .then((result) => {
+      console.log('The solution is: ', result[0][0].solution);
+    })
+    .catch((e) => {
+      console.log('Failed to execute solution. Pool is closing ...', e.message);
+      dbConnectionPool.end();
+    });
+
   console.info(`Server is listening on port ${API_PORT}`);
 });

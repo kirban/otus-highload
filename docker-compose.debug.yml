@@ -31,7 +31,7 @@ services:
     depends_on:
       - db
     restart: unless-stopped
-    command: bash -c 'while !</dev/tcp/db/3306; do sleep 5; done; node server.js'
+    command: bash -c 'while !</dev/tcp/db/3306; do sleep 5; done; node --inspect-brk=0.0.0.0 server.js'
     build:
       context: ./
     volumes:
