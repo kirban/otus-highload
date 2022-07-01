@@ -1,5 +1,10 @@
+CREATE DATABASE IF NOT EXISTS `sessions`;
+
+USE `my_db`;
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hash` VARCHAR(255),
   `firstName` VARCHAR(20),
   `lastName`VARCHAR(20),
   `age` INT(10),

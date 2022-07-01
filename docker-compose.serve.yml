@@ -19,6 +19,7 @@ services:
       MYSQL_DATABASE: my_db
     volumes:
       - .db-init:/docker-entrypoint-initdb.d
+      # - db:/var/lib/mysql
     networks:
       - social-app
   api:
