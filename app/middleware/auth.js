@@ -1,9 +1,14 @@
-const express = require('express');
+const bcrypt = require('bcryptjs');
+const { User } = require('../models');
 
-const router = express.Router();
+const authorizer = async (username, password, cb) => {
+  const user = await User.findByUsername(username);
+  if (user.length === 0) {
+    return cb(null, false);
+  }
+  const compareResult = await bcrypt.compare(password, user[0].hash);
 
-router.post('/login', () => {});
+  return cb(null, compareResult);
+};
 
-router.post('/signup', () => {});
-
-module.exports = router;
+module.exports = authorizer;
