@@ -1,8 +1,10 @@
-const dbConnectionPool = require('../helpers/db');
+const Model = require('./Model');
 
-const Page = {
-  async findById() {},
-  async insert() {},
+class Page extends Model {
+  constructor() {
+    super('personal_pages');
+  }
 }
 
-module.exports = Page;
+const page = new Page();
+module.exports = page;

@@ -46,7 +46,8 @@ class Model {
   }
 
   mapReturnedResult(result) {
-    return result[0];
+    debugger
+    return result[0].insertId ? result[0].insertId : result[0];
   }
 
   async count(where) {

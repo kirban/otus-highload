@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const { User } = require('../models');
+const { User, Page } = require('../models');
 
 const router = express.Router();
 
@@ -19,15 +19,15 @@ router.post('/signup', async (req, res, next) => {
     return next(err);
   }
 
-  // const page = Page.insert(); // todo: create a page
-  const pageId = 0; // todo: temp, remove later
+  const pageTitle = `${username} Page`;
+  const pageId = await Page.insert({ title: pageTitle });
 
   const hash = await bcrypt.hash(password, 10);
 
-  const newUser = await User.insert({
+  await User.insert({
     hash, username, firstName, lastName, age, gender, city, interests, pageId,
   })
-    .then((data) => {
+    .then(async (data) => {
       res.status(200).json({ message: 'OK' });
     })
     .catch((e) => {
