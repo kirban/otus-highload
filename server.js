@@ -7,9 +7,9 @@ const corsOptions = {
 };
 const express = require('express');
 const cors = require('cors');
-const authRouter = require('./app/middleware/auth');
 const dbPool = require('./app/helpers/db');
 const session = require('./app/helpers/session');
+const authRouter = require('./app/routes/auth');
 
 const server = express();
 
@@ -25,7 +25,7 @@ server.get('/', (req, res) => {
 
 server.use(authRouter);
 
-// add router here for secured pages
+// add auth middleware here for secured pages
 
 server.listen(API_PORT, () => {
   dbPool.execute('SELECT 1 + 1 AS solution')
