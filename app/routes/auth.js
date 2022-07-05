@@ -27,12 +27,12 @@ router.post('/signup', async (req, res, next) => {
   await User.insert({
     hash, username, firstName, lastName, age, gender, city, interests, pageId,
   })
-    .then(async (data) => {
-      res.status(200).json({ message: 'OK' });
+    .then((id) => {
+      res.status(200).json({ id, message: 'User created' });
     })
     .catch((e) => {
       const err = new Error(`Server error: ${e.message}`);
-      res.status(500).json({ message: err.message });
+      res.status(500).json({ message: err.message }); // todo: remove later, create error handler
       return next(err);
     });
 });

@@ -45,8 +45,8 @@ class Model {
       .catch((e) => { throw new Error(`Failed to remove ${this.tableName} with id ${id}:\n${e.message}`); });
   }
 
-  mapReturnedResult(result) {
-    return result[0].insertId ? result[0].insertId : result[0];
+  mapReturnedResult([rows, _columns]) {
+    return rows.insertId ? rows.insertId : rows;
   }
 
   async count(where) {
