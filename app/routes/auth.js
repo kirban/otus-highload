@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const User = require('../models/user');
+const { User } = require('../models');
 
 const router = express.Router();
 
@@ -24,7 +24,9 @@ router.post('/signup', async (req, res, next) => {
 
   const hash = await bcrypt.hash(password, 10);
 
-  const newUser = await User.insert(hash, username, firstName,lastName, age, gender, city, interests, pageId)
+  const newUser = await User.insert({
+    hash, username, firstName, lastName, age, gender, city, interests, pageId,
+  })
     .then((data) => {
       res.status(200).json({ message: 'OK' });
     })
