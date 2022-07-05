@@ -46,12 +46,11 @@ class Model {
   }
 
   mapReturnedResult(result) {
-    debugger
     return result[0].insertId ? result[0].insertId : result[0];
   }
 
   async count(where) {
-    return this.pool.query(`SELECT COUNT(*) WHERE ${where}`)
+    return this.pool.query(`SELECT COUNT(*) FROM ${this.tableName} WHERE ${where}`)
       .then((result) => this.mapReturnedResult(result))
       .catch((e) => { throw new Error(`Failed to fetch count ${this.tableName}:\n${e.message}`); });
   }
