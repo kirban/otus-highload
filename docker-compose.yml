@@ -4,8 +4,8 @@ networks:
     driver: bridge
 services:
   db:
-    platform: linux/x86_64
-    image: arm64v8/mysql:oracle
+    container_name: db_container
+    image: amd64/mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     ports:
@@ -27,12 +27,13 @@ services:
     networks:
       - social-app
   api:
+    container_name: social_app
     networks:
       - social-app
     depends_on:
       - db
     restart: unless-stopped
-    command: bash -c 'while !</dev/tcp/db/3306; do sleep 5; done; node server.js'
+    # command: bash -c 'while !</dev/tcp/db/3306; do sleep 5; done; node server.js'
     build:
       context: ./
     volumes:
