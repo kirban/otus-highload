@@ -2,10 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const basicAuth = require('express-basic-auth');
+const cookieParser = require('cookie-parser');
 
-const authorizer = require('./app/middleware/auth');
-const session = require('./app/helpers/session');
-const authRouter = require('./app/routes/auth');
+const authorizer = require('./server/middleware/auth');
+const session = require('./server/helpers/session');
+const authRouter = require('./server/routes/auth');
+const mainRouter = require('./server/routes/index');
 
 const { API_PORT = 8080 } = process.env;
 const corsOptions = {
@@ -14,14 +16,18 @@ const corsOptions = {
 
 const server = express();
 
+server.set('view engine', 'pug');
+server.use(cookieParser());
 server.use(express.json());
-// server.use(express.urlencoded({ extended: true }));
+server.use(express.urlencoded({ extended: true }));
 server.use(cors(corsOptions));
 server.use(session);
 
 // routes
 
-server.use(authRouter);
+server.use(express.static('public'));
+server.use(mainRouter);
+server.use('/api/', authRouter);
 
 server.use(basicAuth({
   authorizer,
@@ -29,10 +35,6 @@ server.use(basicAuth({
   challenge: true,
   realm: 'Imb4T3st4pp',
 }));
-
-server.get('/me', (req, res) => {
-  res.json({ message: 'Welcome to the application. Soon here will be a markup' });
-});
 
 server.listen(API_PORT, () => {
   console.info(`Server is listening on port ${API_PORT}`);

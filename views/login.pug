@@ -1,0 +1,32 @@
+extends layout.pug
+
+block content 
+  section.vh-100
+    .container.py-5.h-100
+      .row.d-flex.align-items-center.justify-content-center.h-100
+        .col-md-8.col-lg-7.col-xl-6
+          img.img-fluid(src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg' alt='Phone image')
+        .col-md-7.col-lg-5.col-xl-5.offset-xl-1
+          h2 Welcome to the social app!
+          form#login
+            // Email input
+            .form-outline.mb-4
+              input#form1Example13.form-control.form-control-lg(type='text')
+              label.form-label(for='form1Example13') Username
+            // Password input
+            .form-outline.mb-4
+              input#form1Example23.form-control.form-control-lg(type='password')
+              label.form-label(for='form1Example23') Password
+            .d-flex.justify-content-around.align-items-center.mb-4
+              // Checkbox
+              .form-check
+                input#form1Example3.form-check-input(type='checkbox' value='' checked='')
+                label.form-check-label(for='form1Example3')  Remember me 
+              a(href='/register') Forgot password?
+            // Submit button
+            button.btn.btn-primary.btn-lg.btn-block(type='submit') Sign In
+            button#signup.btn.btn-outline-primary(type='button') Sign Up
+          p#error(style="display: block; color: red;") Login Failed! Try again.
+
+block scripts 
+  script(src="login.js")

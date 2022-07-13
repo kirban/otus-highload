@@ -1,10 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const { User, Page } = require('../models');
+const sanitizer = require('../helpers/sanitizer');
 
 const router = express.Router();
 
-router.post('/login', async (req, res, next) => {
+router.post('/signin', async (req, res, next) => {
   if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
     return res.status(401).json({ message: 'Missing Authorization Header' });
   }
@@ -22,10 +23,13 @@ router.post('/login', async (req, res, next) => {
     return res.status(401).json({ message: 'Wrong credentials' });
   }
 
+  const userWithoutSensitiveData = JSON.stringify(sanitizer(user[0]));
+  res.cookie('authenticatedUser', userWithoutSensitiveData, { maxAge: 86400000 });
   return res.redirect('/me');
 });
 
 router.post('/signup', async (req, res, next) => {
+  console.dir(req.body);
   const {
     username, password, firstName, lastName, age, gender, city, interests,
   } = req.body;
@@ -40,20 +44,24 @@ router.post('/signup', async (req, res, next) => {
   const pageTitle = `${username} Page`;
   const pageId = await Page.insert({ title: pageTitle });
 
-  const hash = await bcrypt.hash(password, 10);
+  let hash;
+  try {
+    hash = await bcrypt.hash(password, 10);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 
-  await User.insert({
-    hash, username, firstName, lastName, age, gender, city, interests, pageId,
-  })
-    .then((id) => {
-      res.status(200).json({ id, message: 'User created' });
-      // send cookies for auto-login
-    })
-    .catch((e) => {
-      const err = new Error(`Server error: ${e.message}`);
-      res.status(500).json({ message: err.message }); // todo: remove later, create error handler
-      return next(err);
+  try {
+    const newUserId = await User.insert({
+      hash, username, firstName, lastName, age, gender, city, interests, pageId,
     });
+    return res.status(200).json({ newUserId, message: 'User created' });
+  } catch (e) {
+    const err = new Error(`Server error: ${e.message}`);
+    console.log(`Server error: ${e.message}`);
+    res.status(500).json({ message: err.message }); // todo: remove later, create error handler
+    return next(err);
+  }
 });
 
 module.exports = router;
