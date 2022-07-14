@@ -11,6 +11,12 @@ class Page extends Model {
       .catch((e) => { throw new Error(`Failed to fetch all ${this.tableName}:\n${e.message}`); });
   }
 
+  async findById(id) {
+    return this.pool.query(`SELECT * FROM ${this.tableName} INNER JOIN users ON users.pageId=personal_pages.id WHERE personal_pages.id=?`, [id])
+      .then((result) => this.mapReturnedResult(result))
+      .catch((e) => { throw new Error(`Failed to fetch ${this.tableName} by id:\n${e.message}`); });
+  }
+
   mapReturnedResult([rows, _columns]) {
     const formattedRows = rows.map((row) => {
       const {
