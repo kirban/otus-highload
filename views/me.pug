@@ -1,40 +1,18 @@
-extends layout
+extends main_layout
 
-block content 
-  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
-    .container
-      a.navbar-brand(href='#') Social App
-      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarsExample07' aria-controls='navbarsExample07' aria-expanded='false' aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      #navbarsExample07.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
-          li.nav-item.active
-            a.nav-link(href='#') Me
-          li.nav-item
-            a.nav-link(href='#') Users
-          li.nav-item
-            a#logout.nav-link(href='') Logout
-          li.nav-item.dropdown
-            a#dropdown07.nav-link.dropdown-toggle(href='https://example.com' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Dropdown
-            .dropdown-menu(aria-labelledby='dropdown07')
-              a.dropdown-item(href='#') Action
-              a.dropdown-item(href='#') Another action
-              a.dropdown-item(href='#') Something else here
-        form.form-inline.my-2.my-md-0
-          input.form-control(type='text' placeholder='Search' aria-label='Search')
-  .container
-    .card
-      svg.bd-placeholder-img.card-img-top(width='100%' height='180' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Image cap' preserveaspectratio='xMidYMid slice' focusable='false')
-        title Placeholder
-        rect(width='100%' height='100%' fill='#868e96')
-        text(x='50%' y='50%' fill='#dee2e6' dy='.3em') Image cap
-      .card-body
-        h5.card-title #{user.firstName} #{user.lastName}
-        p Возраст: #{user.age}
-        p Пол: #{user.gender}
-        p Город: #{user.city}
-        p.card-text Интересы: #{user.interests}
-        a.btn.btn-primary(href='#') Go somewhere
+block main_content 
+  .card
+    svg.bd-placeholder-img.card-img-top(width='100%' height='180' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Placeholder: Image cap' preserveaspectratio='xMidYMid slice' focusable='false')
+      title Placeholder
+      rect(width='100%' height='100%' fill='#868e96')
+      text(x='50%' y='50%' fill='#dee2e6' dy='.3em') Image cap
+    .card-body
+      h5.card-title #{user.firstName} #{user.lastName}
+      p Возраст: #{user.age}
+      p Пол: #{user.gender}
+      p Город: #{user.city}
+      p.card-text Интересы: #{user.interests}
+      a.btn.btn-primary(href='#') Go somewhere
 
 block scripts 
   script(src="me.js") 
