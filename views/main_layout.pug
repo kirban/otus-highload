@@ -3,18 +3,21 @@ extends layout
 block content 
   nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
     .container
-      a.navbar-brand(href='#') Social App
+      a.navbar-brand(href='/me') Social App
       button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarsExample07' aria-controls='navbarsExample07' aria-expanded='false' aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarsExample07.collapse.navbar-collapse
         ul.navbar-nav.mr-auto
           li.nav-item.active
-            a.nav-link(href='#') Me
+            a.nav-link(href='/me') Me
           li.nav-item
-            a.nav-link(href='#') Users
+            a.nav-link(href='/pages') Pages
           li.nav-item
             a#logout.nav-link(href='') Logout
         form.form-inline.my-2.my-md-0
           input.form-control(type='text' placeholder='Search' aria-label='Search')
   .container
     block main_content
+
+block scripts 
+  script(src="main_layout_scripts.js") 
