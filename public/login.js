@@ -34,7 +34,7 @@ document.getElementById('login').onsubmit = function (e) {
         window.location.href = response.url;
       }
     })
-    .catch((e) => {
-      console.error('something happend', e)
+    .catch((err) => {
+      console.error('something happend', err);
     });
 };

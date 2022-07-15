@@ -18,7 +18,6 @@ document.getElementById('signup').onsubmit = function (e) {
     return;
   }
   filteredBody.password = pass1;
-  console.dir(filteredBody);
 
   fetch('/api/signup', {
     method: 'POST',

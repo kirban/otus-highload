@@ -29,7 +29,6 @@ router.post('/signin', async (req, res, next) => {
 });
 
 router.post('/signup', async (req, res, next) => {
-  console.dir(req.body);
   const {
     username, password, firstName, lastName, age, gender, city, interests,
   } = req.body;
