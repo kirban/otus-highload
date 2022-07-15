@@ -6,13 +6,20 @@ class Page extends Model {
   }
 
   async findAllWithUser() {
-    return this.pool.query(`SELECT * FROM ${this.tableName} INNER JOIN users ON users.pageId=personal_pages.id`)
+    return this.pool.query(`
+        SELECT pp.title, u.pageId ppId, u.id uid, u.userName, u.firstName, u.lastName, u.age, u.gender, u.city, u.interests
+        FROM personal_pages pp 
+        INNER JOIN users u ON pp.id = u.id;`)
       .then((result) => this.mapReturnedResult(result, true))
       .catch((e) => { throw new Error(`Failed to fetch all ${this.tableName}:\n${e.message}`); });
   }
 
   async findByIdWithUser(id) {
-    return this.pool.query(`SELECT * FROM ${this.tableName} INNER JOIN users ON users.pageId=personal_pages.id WHERE personal_pages.id=?`, [id])
+    return this.pool.query(`
+        SELECT pp.title, u.pageId ppId, u.id uid, u.userName, u.firstName, u.lastName, u.age, u.gender, u.city, u.interests
+        FROM personal_pages pp 
+        INNER JOIN users u ON pp.id = u.id
+        WHERE ppId=?;`, [id])
       .then((result) => this.mapReturnedResult(result, true))
       .catch((e) => { throw new Error(`Failed to fetch ${this.tableName} by id:\n${e.message}`); });
   }
@@ -21,9 +28,9 @@ class Page extends Model {
     if (withUser) {
       const formattedRows = rows.map((row) => {
         const {
-          id, title, hash, pageId, ...user
+          ppId, title, ...user
         } = row;
-        return { id, title, user };
+        return { id: ppId, title, user };
       });
 
       return formattedRows.insertId ? formattedRows.insertId : formattedRows;

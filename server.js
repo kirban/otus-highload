@@ -8,6 +8,7 @@ const authorizer = require('./server/middleware/auth');
 const session = require('./server/helpers/session');
 const authRouter = require('./server/routes/auth');
 const mainRouter = require('./server/routes/index');
+const pagesRouter = require('./server/routes/personal_pages');
 
 const { API_PORT = 8080 } = process.env;
 const corsOptions = {
@@ -35,6 +36,8 @@ server.use(basicAuth({
   challenge: true,
   realm: 'Imb4T3st4pp',
 }));
+
+server.use('/api/', pagesRouter);
 
 server.listen(API_PORT, () => {
   console.info(`Server is listening on port ${API_PORT}`);
