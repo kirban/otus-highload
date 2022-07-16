@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "4f6c0e9f-2de9-4aa2-ab7f-e68de5bdc4a7",
+		"name": "Kirill_Romanov_Social_App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"kir\",\n    \"password\": \"hashmeplease\",\n    \"firstName\": \"Kirill\",\n    \"lastName\": \"Romanov\",\n    \"age\": \"26\",\n    \"gender\": \"M\",\n    \"city\": \"NN\",\n    \"interests\": \"games\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrlDev}}:{{port}}/api/signup",
+							"host": [
+								"{{baseUrlDev}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log In",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"authenticatedUser\", pm.cookies.get('authenticatedUser'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kir",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "hashmeplease",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrlDev}}:{{port}}/api/signin",
+							"host": [
+								"{{baseUrlDev}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My page",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kir",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "hashmeplease",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrlDev}}:{{port}}/api/me/page",
+							"host": [
+								"{{baseUrlDev}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"me",
+								"page"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Pages",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Page by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Views",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Login Page",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Register Page",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Pages",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrlDev",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "baseUrlProduction",
+			"value": "51.250.27.80",
+			"type": "string"
+		},
+		{
+			"key": "port",
+			"value": "8080",
+			"type": "string"
+		},
+		{
+			"key": "authenticatedUser",
+			"value": "  "
+		},
+		{
+			"key": "pageId",
+			"value": "1"
+		}
+	]
+}
