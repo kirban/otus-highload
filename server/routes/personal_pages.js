@@ -26,7 +26,7 @@ router.get('/pages', async (req, res) => {
 /**
  * Route for getting page by id
  */
-router.get('/pages/{pageId}', async (req, res) => {
+router.get('/pages/:pageId', async (req, res) => {
   const { pageId } = req.params;
   const page = await Page.findByIdWithUser(pageId);
   res.json(page);

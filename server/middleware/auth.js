@@ -7,7 +7,6 @@ const authorizer = async (username, password, cb) => {
     return cb(null, false);
   }
   const compareResult = await bcrypt.compare(password, user[0].hash);
-
   return cb(null, compareResult);
 };
 

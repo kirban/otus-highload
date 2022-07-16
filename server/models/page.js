@@ -19,7 +19,7 @@ class Page extends Model {
         SELECT pp.title, u.pageId ppId, u.id uid, u.userName, u.firstName, u.lastName, u.age, u.gender, u.city, u.interests
         FROM personal_pages pp 
         INNER JOIN users u ON pp.id = u.id
-        WHERE ppId=?;`, [id])
+        WHERE pp.id=?;`, [id])
       .then((result) => this.mapReturnedResult(result, true))
       .catch((e) => { throw new Error(`Failed to fetch ${this.tableName} by id:\n${e.message}`); });
   }
