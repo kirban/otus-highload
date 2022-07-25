@@ -6,6 +6,15 @@ const { Page } = require('../models');
 const router = express.Router();
 
 /**
+ * Route for searching user pages
+ */
+router.get('/pages/search', async (req, res) => {
+  const { text } = req.query;
+  const pages = await Page.findAllWithPrefix(text, 3);
+  res.json(pages);
+});
+
+/**
  * Route for getting page for current user
  */
 router.get('/me/page', async (req, res) => {
