@@ -20,10 +20,13 @@ block content
               a.nav-link(href='/pages') Pages
           li.nav-item
             a#logout.nav-link(href='#') Logout
-        form.form-inline.my-2.my-md-0
-          input.form-control(type='text' placeholder='Search' aria-label='Search')
+        form.form-inline.my-2.my-md-0.dropdown
+          input#searchInput.form-control(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type='text' placeholder='Search' aria-label='Search')
+          #searchDropdown.dropdown-menu(aria-labeledby='searchInput')
+            h6.dropdown-header Результаты поиска
   .container
     block main_content
 
 block scripts 
+  script(src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous") 
   script(src="main_layout_scripts.js") 
