@@ -1,5 +1,8 @@
 const express = require('express');
+const getPagesWithUser = require('../controllers/getPagesWithUser');
 const { Page } = require('../models');
+
+const { DB_REQUEST_RESULT_LIMIT } = process.env;
 
 const router = express.Router();
 
@@ -27,11 +30,20 @@ router.get('/pages', async (req, res) => {
   const { authenticatedUser } = req.cookies;
   if (!authenticatedUser) { return; }
   const authenticatedUserId = JSON.parse(decodeURI(authenticatedUser)).id;
-  let pages = await Page.findAllWithUser();
+  const { page: currentPage = 1 } = req.query;
+  const totalPagesCount = await Page.count();
+  let pages = await getPagesWithUser(currentPage);
   if (pages.length > 0) {
     pages = pages.filter((page) => page.user.uid !== authenticatedUserId);
   }
-  res.render('pages', { title: 'Pages', pages });
+  const resultsCount = Number(totalPagesCount);
+  res.render('pages', {
+    title: 'Pages',
+    currentPage,
+    pages,
+    resultsCount,
+    pagesCount: Math.ceil(resultsCount / Number(DB_REQUEST_RESULT_LIMIT)),
+  });
 });
 
 module.exports = router;

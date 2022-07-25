@@ -1,4 +1,5 @@
 const express = require('express');
+const getPagesWithUser = require('../controllers/getPagesWithUser');
 
 const { Page } = require('../models');
 
@@ -19,8 +20,10 @@ router.get('/me/page', async (req, res) => {
  * Route for getting all existing pages
  */
 router.get('/pages', async (req, res) => {
-  const pages = await Page.findAllWithUser();
-  res.json(pages);
+  // const { limit, offset } = req.params;
+  const { page: currentPage = 1 } = req.params;
+  const personalPages = await getPagesWithUser(currentPage);
+  res.json(personalPages);
 });
 
 /**
