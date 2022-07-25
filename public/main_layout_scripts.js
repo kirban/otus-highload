@@ -9,7 +9,8 @@ function removeAllCookies() {
   }
 }
 
-document.getElementById('logout').onclick = () => {
+document.getElementById('logout').onclick = (e) => {
+  e.preventDefault();
   removeAllCookies();
   window.location.replace('/login');
 };

@@ -18,3 +18,24 @@ block main_content
             p.card-text Интересы: #{page.user.interests}
             p.card-text
               small.text-muted Last updated 3 mins ago
+  p In current page - #{pages.length}
+  p Total Results - #{resultsCount}
+  p Total Pages - #{pagesCount}
+  nav(aria-label='Page navigation example')
+    - var n = 1;
+    ul.pagination
+      li.page-item(class=(Number(currentPage) == 1 ) ? 'disabled' : '')
+        a.page-link(href=`?page=${Number(currentPage) - 1}` aria-label='Previous')
+          span(aria-hidden='true') &laquo;
+          span.sr-only Previous
+      while n <= pagesCount
+        if n == currentPage 
+          li.page-item.active
+            a.page-link(href='?page='+n) #{n++}
+        else
+          li.page-item
+            a.page-link(href='?page='+n) #{n++}
+      li.page-item(class=(Number(currentPage) == pagesCount ) ? 'disabled' : '')
+        a.page-link(href=`?page=${1 + Number(currentPage)}` aria-label='Next')
+          span.sr-only Next
+          span(aria-hidden='true') &raquo;

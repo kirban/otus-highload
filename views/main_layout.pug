@@ -8,12 +8,18 @@ block content
         span.navbar-toggler-icon
       #navbarsExample07.collapse.navbar-collapse
         ul.navbar-nav.mr-auto
-          li.nav-item.active
-            a.nav-link(href='/me') Me
           li.nav-item
-            a.nav-link(href='/pages') Pages
+            if title == 'Dashboard'
+              a.nav-link.active.disabled(href='/me') Me
+            else
+              a.nav-link(href='/me') Me
           li.nav-item
-            a#logout.nav-link(href='') Logout
+            if title == 'Pages'
+              a.nav-link.active.disabled(href='/pages') Pages
+            else
+              a.nav-link(href='/pages') Pages
+          li.nav-item
+            a#logout.nav-link(href='#') Logout
         form.form-inline.my-2.my-md-0
           input.form-control(type='text' placeholder='Search' aria-label='Search')
   .container
