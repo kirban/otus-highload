@@ -10,8 +10,8 @@ class Model {
     this.tableName = tableName;
   }
 
-  async findAll() {
-    return this.pool.query(`SELECT * FROM ${this.tableName}`)
+  async findAll(limit, offset = 0) {
+    return this.pool.query(`SELECT * FROM ${this.tableName} ${limit ? `LIMIT ${offset}, ${limit}` : ''}`)
       .then((result) => this.mapReturnedResult(result))
       .catch((e) => { throw new Error(`Failed to fetch all ${this.tableName}:\n${e.message}`); });
   }
@@ -45,14 +45,15 @@ class Model {
       .catch((e) => { throw new Error(`Failed to remove ${this.tableName} with id ${id}:\n${e.message}`); });
   }
 
-  mapReturnedResult([rows, _columns]) {
-    return rows.insertId ? rows.insertId : rows;
+  async count(where) {
+    return this.pool.query(`SELECT COUNT(*) FROM ${this.tableName} ${where ? `WHERE ${where}` : ''}`)
+      .then((result) => this.mapReturnedResult(result))
+      .then(([count]) => count['COUNT(*)'])
+      .catch((e) => { throw new Error(`Failed to fetch count ${this.tableName}:\n${e.message}`); });
   }
 
-  async count(where) {
-    return this.pool.query(`SELECT COUNT(*) FROM ${this.tableName} WHERE ${where}`)
-      .then((result) => this.mapReturnedResult(result))
-      .catch((e) => { throw new Error(`Failed to fetch count ${this.tableName}:\n${e.message}`); });
+  mapReturnedResult([rows, _columns]) {
+    return rows.insertId ? rows.insertId : rows;
   }
 }
 

@@ -5,11 +5,12 @@ class Page extends Model {
     super('personal_pages');
   }
 
-  async findAllWithUser() {
+  async findAllWithUser(limit, offset = 0) {
     return this.pool.query(`
         SELECT pp.title, u.pageId ppId, u.id uid, u.userName, u.firstName, u.lastName, u.age, u.gender, u.city, u.interests
         FROM personal_pages pp 
-        INNER JOIN users u ON pp.id = u.id;`)
+        INNER JOIN users u ON pp.id = u.id
+        ${limit ? `LIMIT ${offset}, ${limit}` : ''};`)
       .then((result) => this.mapReturnedResult(result, true))
       .catch((e) => { throw new Error(`Failed to fetch all ${this.tableName}:\n${e.message}`); });
   }
