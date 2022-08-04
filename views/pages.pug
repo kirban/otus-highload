@@ -33,8 +33,15 @@ block main_content
           li.page-item.active
             a.page-link(href='?page='+n) #{n++}
         else
-          li.page-item
-            a.page-link(href='?page='+n) #{n++}
+          if n <= 3
+            li.page-item
+              a.page-link(href='?page='+n) #{n++}
+          else
+            li.page-item.disabled
+              a.page-link ...
+            li.page-item 
+              a.page-link(href='?page='+(Number(pagesCount)-1)) #{Number(pagesCount)-1}
+            - break
       li.page-item(class=(Number(currentPage) == pagesCount ) ? 'disabled' : '')
         a.page-link(href=`?page=${1 + Number(currentPage)}` aria-label='Next')
           span.sr-only Next
