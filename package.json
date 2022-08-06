@@ -7,7 +7,9 @@
     "start": "docker-compose up",
     "debug": "docker-compose -f docker-compose.debug.yml up",
     "serve": "docker-compose -f docker-compose.serve.yml up",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "yc:build": "docker build -t cr.yandex/crptpgj2ukcb1os6kkkb/otus-social2022:lemon . --platform=linux/amd64",
+    "yc:build:push": "docker push cr.yandex/crptpgj2ukcb1os6kkkb/otus-social2022:lemon"
   },
   "keywords": [],
   "author": "",
