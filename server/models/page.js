@@ -5,7 +5,7 @@ class Page extends Model {
     super('personal_pages');
   }
 
-  async findAllWithUser(limit, offset = 0) {
+  async findAllWithUser(limit = undefined, offset = 0) {
     return this.pool.query(`
         SELECT pp.title, u.pageId ppId, u.id uid, u.userName, u.firstName, u.lastName, u.age, u.gender, u.city, u.interests
         FROM personal_pages pp 

@@ -39,6 +39,12 @@ server.use(basicAuth({
 
 server.use('/api/', pagesRouter);
 
+const dbConnectionPool = require('./server/helpers/db');
+
 server.listen(API_PORT, () => {
   console.info(`Server is listening on port ${API_PORT}`);
+
+  dbConnectionPool.query('SELECT 1+1 AS result')
+    .then((result) => console.log(result[0][0]))
+    .catch((e) => console.error('Failed to connect to db,\n', e.message));
 });

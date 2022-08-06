@@ -29,9 +29,13 @@ router.get('/me/page', async (req, res) => {
  * Route for getting all existing pages
  */
 router.get('/pages', async (req, res) => {
-  // const { limit, offset } = req.params;
-  const { page: currentPage = 1 } = req.params;
-  const personalPages = await getPagesWithUser(currentPage);
+  const { page: currentPage = 1, type } = req.query; // type could be undefined or 'all'
+  let personalPages;
+  if (type === 'all') {
+    personalPages = await Page.findAllWithUser();
+  } else {
+    personalPages = await getPagesWithUser(currentPage);
+  }
   res.json(personalPages);
 });
 
