@@ -6,10 +6,11 @@ const sanitizer = require('../helpers/sanitizer');
 const router = express.Router();
 
 router.post('/signin', async (req, res, next) => {
-  if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
-    return res.status(401).json({ message: 'Missing Authorization Header' });
+  if (!req.body.authorization) {
+    console.dir(req.body);
+    return res.status(401).json({ message: 'Missing Authorization' });
   }
-  const base64Credentials = req.headers.authorization.split(' ')[1];
+  const base64Credentials = req.body.authorization.split(' ')[1];
   const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
   const [username, password] = credentials.split(':');
 

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors');
 const basicAuth = require('express-basic-auth');
 const cookieParser = require('cookie-parser');
 
@@ -11,9 +11,9 @@ const mainRouter = require('./server/routes/index');
 const pagesRouter = require('./server/routes/personal_pages');
 
 const { API_PORT = 8080 } = process.env;
-const corsOptions = {
-  origin: `http://localhost:${API_PORT}`,
-};
+// const corsOptions = {
+//   origin: `http://localhost:${API_PORT}`,
+// };
 
 const server = express();
 
@@ -21,7 +21,7 @@ server.set('view engine', 'pug');
 server.use(cookieParser());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
-server.use(cors(corsOptions));
+// server.use(cors(corsOptions));
 server.use(session);
 
 // routes

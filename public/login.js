@@ -24,8 +24,11 @@ document.getElementById('login').onsubmit = function (e) {
     method: 'POST',
     redirect: 'follow',
     headers: {
-      Authorization: `Basic ${encodedString}`,
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify({
+      authorization: `Basic ${encodedString}`,
+    }),
   })
     .then((response) => {
       if (response.status > 400) {
