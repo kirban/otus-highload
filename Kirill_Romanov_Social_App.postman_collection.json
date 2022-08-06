@@ -219,7 +219,7 @@
 		},
 		{
 			"key": "baseUrlProduction",
-			"value": "51.250.27.80",
+			"value": "https://bbacudh5mgfbru54avni.containers.yandexcloud.net/",
 			"type": "string"
 		},
 		{
