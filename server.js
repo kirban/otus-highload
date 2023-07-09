@@ -9,6 +9,7 @@ const session = require('./server/helpers/session');
 const authRouter = require('./server/routes/auth');
 const mainRouter = require('./server/routes/index');
 const pagesRouter = require('./server/routes/personal_pages');
+const logger = require('./server/middleware/logger');
 
 const { API_PORT = 8080 } = process.env;
 // const corsOptions = {
@@ -26,6 +27,7 @@ server.use(session);
 
 // routes
 
+server.use(logger);
 server.use(express.static('public'));
 server.use(mainRouter);
 server.use('/api/', authRouter);
